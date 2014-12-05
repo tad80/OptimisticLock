@@ -1,0 +1,17 @@
+{
+    "name": "tad80/optimisticlock",
+    "type": "cakephp-plugin",
+    "description": "CakePHP behavior plugin to implement optimistic locking for RDBMS.",
+    "keywords": ["cakephp","optimistic lock"],
+    "homepage": "https://github.com/tad80/OptimisticLock",
+    "license": "GNU GPL version 2",
+    "authors": [
+        {
+            "name": "tad80",
+            "homepage": "https://github.com/tad80/OptimisticLock"
+        }
+    ],
+    "require": {
+        "composer/installers": "*"
+    }
+}
