@@ -50,5 +50,13 @@ class OptimisticLockTest extends CakeTestCase {
 			$this->expectException(BadFunctionCallException);
 		} catch (BadFunctionCallException $e) {
 		}
+		try {
+			$post = $this->Post->findById(1);
+			unset($post['Post']['modified']);
+			$this->Post->set($post);
+			$this->Post->validates();
+			$this->expectException(RuntimeException);
+		} catch (RuntimeException $e) {
+		}
 	}
 }

@@ -19,6 +19,9 @@ class OptimisticLockBehavior extends ModelBehavior {
 
 	public function beforeValidate(Model $model, $options = array()) {
 		if (isset($model->data[$model->alias]['id']) ){
+			if (!isset($model->data[$model->alias][$this->config['field']]) || !$model->data[$model->alias][$this->config['field']]) {
+				throw new RuntimeException(__d('optimistic_lock', 'Field %s doesn\'t appear in the post request.', $this->config['field']));
+			}
 			if ($currentRecord = $model->findById($model->data[$model->alias]['id'])) {
 				if($model->data[$model->alias][$this->config['field']] != $currentRecord[$model->alias][$this->config['field']]) {
 					$model->validationErrors[$this->config['field']] = $this->config['message'];
