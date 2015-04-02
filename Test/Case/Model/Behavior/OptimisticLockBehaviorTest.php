@@ -36,9 +36,10 @@ class OptimisticLockTest extends CakeTestCase {
 
 	public function testValidate() {
 		$post = $this->Post->findById(1);
+		$post['Post']['opt_modified'] = $post['Post']['modified'];
 		$this->Post->set($post);
 		$this->assertTrue($this->Post->validates());
-		$post['Post']['modified'] = date('Y/m/d H:i:s', time());
+		$post['Post']['opt_modified'] = date('Y/m/d H:i:s', time());
 		$this->Post->set($post);
 		$this->assertFalse($this->Post->validates());
 		$this->assertEqual('This is error.', $this->Post->validationErrors['modified']);
@@ -52,7 +53,6 @@ class OptimisticLockTest extends CakeTestCase {
 		}
 		try {
 			$post = $this->Post->findById(1);
-			unset($post['Post']['modified']);
 			$this->Post->set($post);
 			$this->Post->validates();
 			$this->expectException(RuntimeException);
