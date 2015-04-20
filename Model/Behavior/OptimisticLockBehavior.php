@@ -32,7 +32,6 @@ class OptimisticLockBehavior extends ModelBehavior {
 				$model->validationErrors[$this->config['field']] = $this->config['message'];
 				return false;
 			}
-			unset($model->data[$model->alias]['opt_' . $this->config['field']]);
 		}
 		unset($model->data[$model->alias]['opt_' . $this->config['field']]);
 		return true;
