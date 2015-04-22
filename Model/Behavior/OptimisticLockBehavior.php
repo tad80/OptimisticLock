@@ -38,8 +38,8 @@ class OptimisticLockBehavior extends ModelBehavior {
 	}
 
 	public function beforeSave(Model $model, $options = array()) {
-		if (isset($model->data[$this->alias]['opt_' . $this->config['field']])) {
-			unset($model->data[$this->alias]['opt_' . $this->config['field']]);
+		if (isset($model->data[$model->alias]['opt_' . $this->config['field']])) {
+			unset($model->data[$model->alias]['opt_' . $this->config['field']]);
 		}
 		return true;
 	}
