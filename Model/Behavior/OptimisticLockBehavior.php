@@ -38,7 +38,7 @@ class OptimisticLockBehavior extends ModelBehavior {
 	}
 
 	public function beforeSave(Model $model, $options = array()) {
-		if (array_key_exists($model->data[$model->alias]['opt_' . $this->config['field']])) {
+		if (array_key_exists('opt_' . $this->config['field'], $model->data[$model->alias])) {
 			unset($model->data[$model->alias]['opt_' . $this->config['field']]);
 		}
 		return true;
