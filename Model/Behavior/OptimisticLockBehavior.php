@@ -18,13 +18,13 @@ class OptimisticLockBehavior extends ModelBehavior {
 	}
 
 	public function beforeValidate(Model $model, $options = array()) {
-		if (!isset($model->data[$model->alias]['id']) || !$model->data[$model->alias]['id']) {
+		if (!array_key_exists('id', $model->data[$model->alias]) || !$model->data[$model->alias]['id']) {
 			if (!isset($model->id) || !$model->id) {
 				return true;
 			}
 			$model->data[$model->alias]['id'] = $model->id;
 		}
-		if (!isset($model->data[$model->alias]['opt_' . $this->config['field']]) || !$model->data[$model->alias]['opt_' . $this->config['field']]) {
+		if (!array_key_exists('opt_' . $this->config['field'], $model->data[$model->alias]) || !$model->data[$model->alias]['opt_' . $this->config['field']]) {
 			throw new RuntimeException(__d('optimistic_lock', 'Field %s doesn\'t appear in the post request.', $this->config['field']));
 		}
 		if ($currentRecord = $model->findById($model->data[$model->alias]['id'])) {
@@ -38,7 +38,7 @@ class OptimisticLockBehavior extends ModelBehavior {
 	}
 
 	public function beforeSave(Model $model, $options = array()) {
-		if (isset($model->data[$model->alias]['opt_' . $this->config['field']])) {
+		if (array_key_exists('opt_' . $this->config['field'], $model->data[$model->alias])) {
 			unset($model->data[$model->alias]['opt_' . $this->config['field']]);
 		}
 		return true;
